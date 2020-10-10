@@ -38,7 +38,7 @@ def get_aegea_data():
 
     QUERY = f'''
         select notes.Title as title
-            , CONCAT({BLOG_URL}, notes.OriginalAlias) as url
+            , CONCAT("{BLOG_URL}", notes.OriginalAlias) as url
             , from_unixtime(notes.Stamp) as "date"
             , notes.Text as body
             , char_length(notes.Text) as text_len
@@ -78,11 +78,12 @@ def main():
 
     os.makedirs(RESULT_FOLDER, exist_ok=True)
 
-    try:
-        df.to_csv(result_filepath, index=False)
-        print(f'successfully wrote file to {result_filepath}')
-    except Exception as e:
-        print(f'ERROR during writing the file with path {result_filepath}')
+    if len(df) > 0:
+        try:
+            df.to_csv(result_filepath, index=False)
+            print(f'successfully wrote file to {result_filepath}')
+        except Exception as e:
+            print(f'ERROR during writing the file with path {result_filepath}')
 
 
 if __name__ == '__main__':
