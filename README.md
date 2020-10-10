@@ -1,36 +1,48 @@
 # Экспорт данных из Эгеи
 
-1. download repo
+1. open terminal 
 
-2. open terminal
-
-3. create `.env` file (not included in the repo for security reasons)
-
+2. clone the repo
     ```
-    touch .env
+   git clone https://github.com/Sasha-Mikhailov/Aegea_export.git
+   cd Aegea_export
+    ```
+   
+3. fill database credentials to the `.env` file:
+    ```
     nano .env
     ```
-
-2. fill database credentials to the `.env` file:
     - DB_USER 
     - DB_PASSWORD
     - DB_HOST
     - DB_NAME
-    - BLOG_URL
+    - BLOG_URL (_not neccessary, just for fine URLs in the result file_)
 
-3. activate virtual environment
+4. install a `virtualenv`
+    ```
+    pip3 install virtualenv 
+    ```
+5. create a new one for the repo:
+    ```
+    virtualenv -p python3 venv
+    ```
+6. activate virtual environment
     ```
     source venv/bin/activate
     ```
-4. install dependencies according to the requirements.txt
+7. install dependencies according to the requirements.txt
     ```
     pip install -r requirements.txt 
     ```
-5. script's logic:
-    1. gets database's credentials from  `.env` file 
-    2. connects to the database
-    3. executes SQL query to fetch data
-    4. writes the result to folder `output`
+8. run the script:
+    ```
+    python3 main.py 
+    ```
+## script's logic
+1. gets database's credentials from  `.env` file 
+2. connects to the database
+3. executes SQL query to fetch data
+4. writes the result to folder `output`
 
 
 
