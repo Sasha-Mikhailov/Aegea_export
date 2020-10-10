@@ -2,14 +2,21 @@
 
 1. download repo
 
+2. open terminal
+
+3. create `.env` file (not included in the repo for security reasons)
+
+    ```
+    touch .env
+    nano .env
+    ```
+
 2. fill database credentials to the `.env` file:
     - DB_USER 
     - DB_PASSWORD
     - DB_HOST
     - DB_NAME
     - BLOG_URL
-
-2. open terminal
 
 3. activate virtual environment
     ```
