@@ -19,7 +19,6 @@ def connect_to_database():
     con_string = f'mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:3306/{DB_NAME}'
 
     engine = create_engine(con_string)
-    os.environ.clear()
 
     return engine
 
@@ -27,11 +26,14 @@ def connect_to_database():
 def get_aegea_data():
     engine = connect_to_database()
 
-    QUERY = '''
+    BLOG_URL = os.environ.get('BLOG_URL')
+    os.environ.clear()
+
+    QUERY = f'''
         select notes.Title as title
+            , CONCAT({BLOG_URL}, notes.OriginalAlias) as url
             , from_unixtime(notes.Stamp) as "date"
             , notes.Text as body
-            , notes.OriginalAlias as url
             , char_length(notes.Text) as text_len
             , coalesce(views.hits, 0) as hits
             , coalesce(comments.comments_count, 0) as comments
