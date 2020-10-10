@@ -54,7 +54,12 @@ def get_aegea_data():
 def main():
     df = get_aegea_data()
 
-    df.to_csv('aegea_export.csv', index=False)
+    RESULT_FOLDER = 'output'
+    RESULT_FNAME = 'aegea_export.csv'
+
+    os.makedirs(RESULT_FOLDER, exist_ok=True)
+
+    df.to_csv(os.path.join(RESULT_FOLDER, RESULT_FNAME), index=False)
 
 
 if __name__ == '__main__':
