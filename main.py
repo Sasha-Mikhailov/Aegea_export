@@ -18,7 +18,14 @@ def connect_to_database():
 
     con_string = f'mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:3306/{DB_NAME}'
 
-    engine = create_engine(con_string)
+    engine = None
+
+    try:
+        engine = create_engine(con_string)
+        print('successfully connected to the database')
+    except Exception as e:
+        print('ERROR! cant connect to the database')
+        print(e)
 
     return engine
 
@@ -48,18 +55,34 @@ def get_aegea_data():
             group by 1) as comments on comments.NoteID = notes.ID
         '''
 
-    return pd.read_sql(QUERY, engine)
+    df = pd.DataFrame()
+    if engine:
+        try:
+            df = pd.read_sql(QUERY, engine)
+            print(f'got {len(df)} rows from the database')
+        except Exception as e:
+            print('ERROR during fetching data from database')
+            print(e)
 
+    return df
 
 def main():
-    df = get_aegea_data()
+    try:
+        df = get_aegea_data()
+    except Exception as e:
+        print('ERROR unexpected')
 
     RESULT_FOLDER = 'output'
     RESULT_FNAME = 'aegea_export.csv'
+    result_filepath = os.path.join(RESULT_FOLDER, RESULT_FNAME)
 
     os.makedirs(RESULT_FOLDER, exist_ok=True)
 
-    df.to_csv(os.path.join(RESULT_FOLDER, RESULT_FNAME), index=False)
+    try:
+        df.to_csv(result_filepath, index=False)
+        print(f'successfully wrote file to {result_filepath}')
+    except Exception as e:
+        print(f'ERROR during writing the file with path {result_filepath}')
 
 
 if __name__ == '__main__':
