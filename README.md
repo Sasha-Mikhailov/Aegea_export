@@ -34,10 +34,12 @@
     ```
     pip install -r requirements.txt 
     ```
-8. run the script:
+8. run the script 
     ```
     python3 main.py 
     ```
+   _(install Python from [original website](https://www.python.org/downloads/release/python-390/), 
+   find your OS in section 'Files')_
 ## script's logic
 1. gets database's credentials from  `.env` file 
 2. connects to the database
